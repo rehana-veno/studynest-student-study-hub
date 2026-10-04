@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="StudyNest is a student study hub for tasks, exams, timetable, notes, goals, and progress." />
+  <title>StudyNest – Student Study Hub</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">📚</div>
+        <div><h1>StudyNest</h1><p>Student Study Hub</p></div>
+      </div>
+      <nav aria-label="Main navigation">
+        <button class="nav-btn active" data-section="dashboard">🏠 <span>Dashboard</span></button>
+        <button class="nav-btn" data-section="tasks">✅ <span>My Tasks</span></button>
+        <button class="nav-btn" data-section="exams">📝 <span>Exams</span></button>
+        <button class="nav-btn" data-section="timetable">🗓️ <span>Timetable</span></button>
+        <button class="nav-btn" data-section="notes">📒 <span>Notes</span></button>
+        <button class="nav-btn" data-section="planner">🧠 <span>Smart Plan</span></button>
+        <button class="nav-btn" data-section="progress">📈 <span>Progress</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="theme-row"><span>🌙 Dark mode</span><label class="switch"><input id="themeToggle" type="checkbox" /><span></span></label></div>
+        <div class="sidebar-note"><strong>Stay on track</strong><span>Keep school work, deadlines, and study plans in one simple place.</span></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div><p class="eyebrow">YOUR SCHOOL DAY</p><h2 id="pageTitle">Dashboard</h2></div>
+        <div class="top-actions">
+          <button class="secondary-btn" id="focusBtn">⏱️ Focus</button>
+          <button class="primary-btn" id="openTaskModalBtn">+ Add Task</button>
+        </div>
+      </header>
+
+      <section id="dashboard" class="page-section active-section">
+        <div class="welcome-card">
+          <div><p class="eyebrow">WELCOME</p><h3>Turn school chaos into a clear plan.</h3><p>Track work, prepare for exams, and build consistent study habits.</p></div>
+          <div class="today-pill" id="todayText"></div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card"><span>Total tasks</span><strong id="statTasks">0</strong><small id="statTasksSub">Keep moving</small></div>
+          <div class="stat-card"><span>Due soon</span><strong id="statDueSoon">0</strong><small>Next 3 days</small></div>
+          <div class="stat-card"><span>Completed</span><strong id="statCompleted">0</strong><small id="statCompletedSub">0% of tasks</small></div>
+          <div class="stat-card"><span>Progress</span><strong id="statProgress">0%</strong><small>This study board</small></div>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel">
+            <div class="panel-heading"><div><h3>Today’s priorities</h3><p>Focus on what needs attention first.</p></div><button class="link-btn" data-go="tasks">View all</button></div>
+            <div id="dashboardTaskList" class="task-list"></div>
+          </section>
+          <section class="panel mini-dashboard">
+            <div class="panel-heading"><div><h3>Daily goal</h3><p>Small wins add up.</p></div><button class="link-btn" id="editGoalBtn">Edit</button></div>
+            <div class="goal-wrap"><div class="goal-number" id="goalNumber">0 / 3</div><div class="progress-track"><div class="progress-fill" id="goalFill"></div></div><p id="goalMessage">Complete 3 tasks today.</p></div>
+            <div class="tip-box"><div class="tip-icon">💡</div><p id="tipText">Start with the task that is important and due soon.</p></div>
+          </section>
+        </div>
+
+        <div class="content-grid three-grid">
+          <section class="panel quick-card"><div class="quick-icon">📝</div><div><h3 id="nextExamTitle">No exams added</h3><p id="nextExamMeta">Add an exam to see its countdown.</p></div><button class="link-btn" data-go="exams">Manage exams</button></section>
+          <section class="panel quick-card"><div class="quick-icon">📒</div><div><h3 id="notesCount">0 saved notes</h3><p>Keep quick revision notes organized.</p></div><button class="link-btn" data-go="notes">Open notes</button></section>
+          <section class="panel quick-card"><div class="quick-icon">🧠</div><div><h3>Study plan ready</h3><p>Turn pending tasks into manageable study blocks.</p></div><button class="link-btn" data-go="planner">Build plan</button></section>
+        </div>
+      </section>
+
+      <section id="tasks" class="page-section">
+        <section class="panel">
+          <div class="panel-heading"><div><h3>My Tasks</h3><p>Add and organize school work by subject, date, type, and priority.</p></div><button class="primary-btn" id="tasksAddBtn">+ Add Task</button></div>
+          <div class="filter-row">
+            <input id="searchInput" class="text-input" type="search" placeholder="Search tasks..." />
+            <select id="subjectFilter" class="select-input"><option value="all">All subjects</option></select>
+            <select id="statusFilter" class="select-input"><option value="all">All status</option><option value="pending">Pending</option><option value="completed">Completed</option></select>
+            <select id="priorityFilter" class="select-input"><option value="all">All priorities</option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select>
+            <select id="typeFilter" class="select-input"><option value="all">All types</option><option>Homework</option><option>Assignment</option><option>Test</option><option>Project</option><option>Other</option></select>
+          </div>
+          <div id="allTaskList" class="task-list"></div>
+        </section>
+      </section>
+
+      <section id="exams" class="page-section">
+        <section class="panel">
+          <div class="panel-heading"><div><h3>Exam Planner</h3><p>Keep upcoming exams visible so you can prepare early.</p></div><button class="primary-btn" id="openExamModalBtn">+ Add Exam</button></div>
+          <div id="examList" class="exam-grid"></div>
+        </section>
+      </section>
+
+      <section id="timetable" class="page-section">
+        <section class="panel">
+          <div class="panel-heading"><div><h3>Class Timetable</h3><p>Store your regular school schedule in one place.</p></div><button class="primary-btn" id="openClassModalBtn">+ Add Class</button></div>
+          <div class="table-scroll"><table class="timetable"><thead><tr><th>Day</th><th>Time</th><th>Subject</th><th>Room</th><th></th></tr></thead><tbody id="timetableBody"></tbody></table></div>
+        </section>
+      </section>
+
+      <section id="notes" class="page-section">
+        <section class="panel">
+          <div class="panel-heading"><div><h3>Quick Notes</h3><p>Save short revision notes without losing them in chats or notebooks.</p></div><button class="primary-btn" id="openNoteModalBtn">+ Add Note</button></div>
+          <div class="filter-row"><input id="noteSearch" class="text-input" type="search" placeholder="Search notes..." /></div>
+          <div id="notesGrid" class="notes-grid"></div>
+        </section>
+      </section>
+
+      <section id="planner" class="page-section">
+        <div class="content-grid planner-grid">
+          <section class="panel"><div class="panel-heading"><div><h3>Smart Study Plan</h3><p>StudyNest turns your pending tasks into manageable focus blocks using their deadlines and priorities.</p></div></div><div class="planner-controls"><label>Minutes per focus block<select id="blockMinutes"><option value="25">25 minutes</option><option value="40">40 minutes</option><option value="50">50 minutes</option></select></label><button class="primary-btn" id="generatePlanBtn">Generate plan</button></div><div id="planList" class="plan-list"></div></section>
+          <section class="panel"><div class="panel-heading"><div><h3>Focus Timer</h3><p>Use focused sessions with short breaks.</p></div></div><div class="timer"><div class="timer-mode" id="timerMode">Focus session</div><div class="timer-display" id="timerDisplay">25:00</div><div class="timer-actions"><button class="primary-btn" id="timerStart">Start</button><button class="secondary-btn" id="timerPause">Pause</button><button class="secondary-btn" id="timerReset">Reset</button></div><p id="timerSessions">0 focus sessions completed today</p></div></section>
+        </div>
+      </section>
+
+      <section id="progress" class="page-section">
+        <div class="content-grid">
+          <section class="panel progress-panel"><div class="panel-heading"><div><h3>Your progress</h3><p>See how much of your school work you have finished.</p></div></div><div class="progress-visual"><div class="progress-circle" id="progressCircle"><span id="progressCircleText">0%</span></div><div><h4 id="progressHeadline">Ready to start</h4><p id="progressMessage">Complete a task to build your progress.</p></div></div></section>
+          <section class="panel"><div class="panel-heading"><div><h3>Study statistics</h3><p>A quick snapshot of your study board.</p></div></div><div class="stat-list"><div><span>Tasks completed</span><strong id="progressCompleted">0</strong></div><div><span>Pending tasks</span><strong id="progressPending">0</strong></div><div><span>Exams added</span><strong id="progressExams">0</strong></div><div><span>Notes saved</span><strong id="progressNotes">0</strong></div><div><span>Focus sessions</span><strong id="progressSessions">0</strong></div></div></section>
+        </div>
+        <section class="panel subject-progress-panel"><div class="panel-heading"><div><h3>Subject progress</h3><p>See which subjects have the most unfinished work.</p></div></div><div id="subjectProgressList" class="subject-progress-list"></div></section>
+      </section>
+    </main>
+  </div>
+
+  <!-- Task modal -->
+  <div class="modal" id="taskModal" aria-hidden="true"><div class="modal-card"><div class="modal-header"><div><p class="eyebrow">NEW SCHOOL TASK</p><h3>Add a task</h3></div><button class="icon-btn" data-close="taskModal">✕</button></div><form id="taskForm"><label>Task name<input id="taskName" required maxlength="80" placeholder="e.g. Finish biology notes" /></label><div class="form-grid"><label>Subject<input id="taskSubject" required maxlength="40" placeholder="e.g. Biology" /></label><label>Due date<input id="taskDate" required type="date" /></label></div><div class="form-grid"><label>Type<select id="taskType"><option>Homework</option><option>Assignment</option><option>Test</option><option>Project</option><option>Other</option></select></label><label>Priority<select id="taskPriority"><option>High</option><option selected>Medium</option><option>Low</option></select></label></div><button class="primary-btn full-btn" type="submit">Save Task</button></form></div></div>
+
+  <!-- Exam modal -->
+  <div class="modal" id="examModal" aria-hidden="true"><div class="modal-card"><div class="modal-header"><div><p class="eyebrow">EXAM PLANNER</p><h3>Add an exam</h3></div><button class="icon-btn" data-close="examModal">✕</button></div><form id="examForm"><label>Exam name<input id="examName" required maxlength="60" placeholder="e.g. Biology Midterm" /></label><div class="form-grid"><label>Subject<input id="examSubject" required maxlength="40" placeholder="e.g. Biology" /></label><label>Exam date<input id="examDate" required type="date" /></label></div><label>Notes (optional)<textarea id="examNotes" rows="3" maxlength="180" placeholder="Topics to revise..."></textarea></label><button class="primary-btn full-btn" type="submit">Save Exam</button></form></div></div>
+
+  <!-- Class modal -->
+  <div class="modal" id="classModal" aria-hidden="true"><div class="modal-card"><div class="modal-header"><div><p class="eyebrow">CLASS TIMETABLE</p><h3>Add a class</h3></div><button class="icon-btn" data-close="classModal">✕</button></div><form id="classForm"><div class="form-grid"><label>Day<select id="classDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option></select></label><label>Time<input id="classTime" required placeholder="09:00 AM" /></label></div><div class="form-grid"><label>Subject<input id="classSubject" required placeholder="e.g. Mathematics" /></label><label>Room<input id="classRoom" placeholder="e.g. 204" /></label></div><button class="primary-btn full-btn" type="submit">Save Class</button></form></div></div>
+
+  <!-- Note modal -->
+  <div class="modal" id="noteModal" aria-hidden="true"><div class="modal-card"><div class="modal-header"><div><p class="eyebrow">QUICK REVISION NOTE</p><h3>Add a note</h3></div><button class="icon-btn" data-close="noteModal">✕</button></div><form id="noteForm"><label>Title<input id="noteTitle" required maxlength="70" placeholder="e.g. Photosynthesis" /></label><label>Subject<input id="noteSubject" required maxlength="40" placeholder="e.g. Biology" /></label><label>Note<textarea id="noteBody" required rows="6" maxlength="1000" placeholder="Write a short revision note..."></textarea></label><button class="primary-btn full-btn" type="submit">Save Note</button></form></div></div>
+
+  <!-- Goal modal -->
+  <div class="modal" id="goalModal" aria-hidden="true"><div class="modal-card"><div class="modal-header"><div><p class="eyebrow">DAILY GOAL</p><h3>Set your target</h3></div><button class="icon-btn" data-close="goalModal">✕</button></div><form id="goalForm"><label>Tasks to complete today<input id="goalInput" type="number" min="1" max="20" required /></label><button class="primary-btn full-btn" type="submit">Save Goal</button></form></div></div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
